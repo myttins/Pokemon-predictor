@@ -1,0 +1,25 @@
+version: '3.8'
+services:
+  app:
+    container_name: my_pokemon_app
+    build: .
+    ports:
+      - "3001:3000"
+    depends_on:
+      - db
+    environment:
+      DATABASE_URL: postgres://user:password@db:5432/mydb
+
+  db:
+    container_name: my_pokemon_db
+    image: postgres:13
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./server/data/initdb.sql:/docker-entrypoint-initdb.d/initdb.sql 
+    environment:
+      POSTGRES_USER: username
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: mydb
+
+volumes:
+  postgres_data:

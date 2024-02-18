@@ -1,0 +1,95 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* @font-face {
+  font-family: 'simplified-chinese';
+  src: url('./assets/NotoSansSC-VariableFont_wght.ttf');
+} */
+
+html {
+  /* font-family: 'simplified-chinese'; */
+  @apply bg-zinc-100;
+  @apply text-sm;
+  @apply text-zinc-900;
+}
+
+h1 {
+  @apply text-2xl;
+}
+
+h2 {
+  @apply text-xl;
+}
+
+.btn {
+  @apply text-sm font-bold py-1 px-2 rounded;
+  @apply bg-black text-white;
+  @apply transition-transform;
+  @apply duration-300;
+  @apply ease-in-out;
+  @apply border border-black border-2;
+}
+
+.btn-lte {
+  @apply text-sm font-bold py-1 px-2 rounded;
+  @apply bg-white text-black;
+  @apply transition-transform;
+  @apply duration-300;
+  @apply ease-in-out;
+  @apply border border-black border-2;
+}
+.btn-lte:hover {
+  @apply translate-y-0.5;
+}
+
+.btn:hover {
+  @apply translate-y-0.5;
+}
+
+.btn-red {
+  @apply text-sm font-bold py-1 px-2 rounded;
+  @apply bg-red-700 text-white;
+}
+
+.btn-red:hover {
+  @apply bg-white text-red-700;
+  outline: solid red 2px;
+}
+
+.input {
+  @apply border;
+  @apply px-2;
+  @apply uppercase;
+}
+
+.box-white {
+  @apply bg-white;
+  @apply p-6 m-4;
+  @apply rounded;
+  @apply border;
+  @apply shadow-sm;
+}
+
+.text-color-dark1 {
+  @apply text-slate-800;
+}
+
+.text-color-light1 {
+  @apply text-slate-500;
+}
+
+@keyframes pulseBackground {
+  0%, 100% {
+    background-color: rgba(255, 255, 255, 0.3); /* more faded white */
+  }
+  50% {
+    background-color: rgba(255, 255, 255, 0.8); /* solid white */
+  }
+}
+
+/* Extend the .box-white class with the animation */
+.loading {
+  @apply bg-white border p-8 m-4 rounded shadow-sm; /* Tailwind classes */
+  animation: pulseBackground 1s ease-in-out infinite; /* Custom animation */
+}
