@@ -1,18 +1,25 @@
 // /server/data/db.js
-require('dotenv').config(); // Ensure this is at the top to load environment variables
+require('dotenv').config('../../.env'); // Ensure this is at the top to load environment variables
 const { Pool } = require('pg');
 
 const isRunningInDocker = process.env.RUNNING_IN_DOCKER === 'true';
+const dbHost = isRunningInDocker ? 'db' : 'localhost';
 
-const pool = new Pool({
-  user: 'username',
-  // host: isRunningInDocker ? 'db' : 'localhost',
-  host: 'db',
-  database: 'mydb',
-  password: 'password',
-  port: 5432,
-});
+const dbConfig = process.env.DATABASE_URL
+  ? {
+      connectionString: process.env.DATABASE_URL,
+    }
+  : {
+      user: 'username',
+      host: dbHost,
+      database: 'mydb',
+      password: 'password',
+      port: 5432,
+    };
 
+console.log(process.env)
+
+const pool = new Pool(dbConfig);
 const initializedb = async () => {
   try {
     await pool.query(`CREATE TABLE IF NOT EXISTS pokemon (
@@ -25,27 +32,9 @@ const initializedb = async () => {
     VALUES (1, 'bulbasaur', 64)
     ON CONFLICT (id) DO UPDATE 
     SET name = EXCLUDED.name, power = EXCLUDED.power;`);
-
   } catch (error) {
-    console.log('failled at initizliedb');
+    console.log('failled at initializedb');
   }
 };
 
-async function printAllTables() {
-  try {
-    const query = `
-      SELECT table_schema, table_name
-      FROM information_schema.tables
-      WHERE table_type = 'BASE TABLE' AND
-      table_schema NOT IN ('pg_catalog', 'information_schema')
-      ORDER BY table_schema, table_name;
-    `;
-    const { rows } = await pool.query(query);
-    console.log('Tables in the database:');
-    rows.forEach((row) => console.log(`${row.table_schema}.${row.table_name}`));
-  } catch (err) {
-    console.error('Error listing tables:', err);
-  }
-}
-
-module.exports = { pool, printAllTables, initializedb };
+module.exports = { pool, initializedb };
