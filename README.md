@@ -1,1 +1,1 @@
-# Oversight
+docker-compose up --build
