@@ -8,8 +8,7 @@ services:
     depends_on:
       - db
     environment:
-      DATABASE_URL: postgres://user:password@db:5432/mydb
-
+      DATABASE_URL: postgres://username:password@db:5432/mydb
   db:
     container_name: my_pokemon_db
     image: postgres:13

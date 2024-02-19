@@ -17,7 +17,6 @@ const dbConfig = process.env.DATABASE_URL
       port: 5432,
     };
 
-console.log(process.env)
 
 const pool = new Pool(dbConfig);
 const initializedb = async () => {

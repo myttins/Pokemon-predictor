@@ -17,6 +17,10 @@ require('dotenv').config({ path: path.resolve(__dirname, '../.env') });
 app.use(express.static(path.join(__dirname, '../build')));
 app.use('/api/pokemon', pokemon);
 
+app.get('/api/healthcheck', (req, res) => {
+  return res.sendStatus(200);
+});
+
 // Serve the React application
 app.get('*', (_req, res) => {
   return res.sendFile(path.join(__dirname, '../build', 'index.html'));
@@ -35,10 +39,10 @@ app.use((error, _req, res, _next) => {
 
 const PORT = parseInt(process.env.PORT) || 3000;
 
-const printdb = async () => {
-  const { rows } = await pool.query('SELECT * FROM pokemon');
-  console.log(res.json(rows));
-};
+// const printdb = async () => {
+//   const { rows } = await pool.query('SELECT * FROM pokemon');
+//   console.log(res.json(rows));
+// };
 
 const waitForDb = async (maxRetries = 5, interval = 2000) => {
   for (let attempt = 1; attempt <= maxRetries; attempt++) {
